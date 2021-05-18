@@ -307,7 +307,7 @@ margin-left: 0!important;
 
 /* orderbook row */
 [class*="src-modules-Orderbook-containers-components-styles-cell-"] {
-  padding: 0!important!important;
+  padding: 0!important;
   line-height: 1.15!important;
 }
 [class*="src-modules-Orderbook-containers-components-OrdersTag-OrdersTag-orderTag-"] {

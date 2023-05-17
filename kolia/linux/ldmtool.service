@@ -1,0 +1,11 @@
+[Unit]
+Description=Mount windows raid
+
+[Service]
+ExecStart=/home/kolia/script/ldmtool.sh start
+ExecStop=/home/kolia/script/ldmtool.sh stop
+Type=oneshot
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

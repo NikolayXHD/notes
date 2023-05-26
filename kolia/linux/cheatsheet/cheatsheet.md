@@ -343,3 +343,31 @@ Logout / Login
 `KDE Settings / Input Devices / Graphic Tablet / Stylus`
 
 Выполнить `~/script/set_wacom_screen.sh` для привязки экрана и кнопок стилуса.
+
+fix dotnet Globalization
+------------------------
+ошибка runtime
+```
+Process terminated. Couldn't find a valid ICU package installed on the system. Set the configuration flag System.Globalization.Invariant to true if you want to run with no globalization support.
+```
+
+- Вариант 1. Обмазаться везде переменной окружения
+  `DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1`
+  - Чтобы применилось к IDE, https://userbase.kde.org/Session_Environment_Variables
+    прописать в `~/.config/plasma-workspace/env/dotnet.sh`
+    ```
+    export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+    ```
+  - Чтобы применилось в shell, в `~/.config/fish/config.fish`
+    ```
+    set -x DOTNET_SYSTEM_GLOBALIZATION_INVARIANT
+    ```
+
+  Не прокатило в smartcat/work, ей очень хочется культуру en_US в дефолтном
+  json-сериализаторе для NLog
+
+- Вариант 2
+  Пакет `icu` уже есть, но может не хватать `libicu`
+  ```
+  yay -S libicu53
+  ```

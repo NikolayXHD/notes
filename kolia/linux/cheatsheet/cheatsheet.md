@@ -371,3 +371,13 @@ Process terminated. Couldn't find a valid ICU package installed on the system. S
   ```
   yay -S libicu53
   ```
+
+Ускорить отладку .netcore smartcat
+----------------------------------
+
+```
+cd $DOTNET_ROOT/shared/Microsoft.NETCore.App/3.1.32/
+sudo mv System.Private.CoreLib.dll System.Private.CoreLib.dll.bak
+sudo mv ~/Downloads/System.Private.CoreLib.dll .
+sudo chown root:root System.Private.CoreLib.dll
+```

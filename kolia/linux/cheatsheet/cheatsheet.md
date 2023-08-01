@@ -381,3 +381,27 @@ sudo mv System.Private.CoreLib.dll System.Private.CoreLib.dll.bak
 sudo mv ~/Downloads/System.Private.CoreLib.dll .
 sudo chown root:root System.Private.CoreLib.dll
 ```
+
+Btrfs снепшоты
+--------------
+
+Используем `snapper`, т.к. `timeshift` ожидает особой настройки, которую
+делает ubuntu, но не arch: https://bbs.archlinux.org/viewtopic.php?id=267005
+
+https://wiki.archlinux.org/title/snapper
+```
+sudo pacman -S snapper
+yay -S snapper-gui-git
+```
+
+1 раз создать конфигурацию для корневого тома
+```
+sudo snapper -c root create-config /
+```
+
+Запускаем gui с правами админа
+```
+sudo snapper-gui
+```
+
+Создаём снешпоты

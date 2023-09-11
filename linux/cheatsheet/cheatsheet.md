@@ -413,3 +413,9 @@ https://stackoverflow.com/a/60687262/6656775 fold arbitrary code in pycharm
 Можно схлопнуть произвольный код
 1. Выдeлить, напр `Ctrl + A`
 2. `Ctrl + .`
+
+tmux pane grid
+--------------
+tmux сетка панелей
+
+`Ctrl + b`, `Alt + 5`

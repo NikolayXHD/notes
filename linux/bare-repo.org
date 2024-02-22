@@ -1,0 +1,45 @@
+* Идея
+
+Хотим избавиться от github, чтобы обезопасить код.
+
+* Шаги
+
+** Создаём bare-репозиторий git в локальной сети.
+
+Команды приведены приближённо к исторической правде, в ущерб минимализму.
+
+#+begin_src bash
+  cd /run/media/kolia/ssd
+  mdkr bare
+  cd bare
+  mkdir sandbox
+  cd sandbox
+  git init --bare
+#+end_src
+
+** Cимволическая ссылка в домашеней директории
+
+Чтобы укоротить ссылки на репу
+#+begin_src bash
+  ln -s /run/media/kolia/ssd/bare ~/bare
+#+end_src
+
+** Переводим локальную копию репо на remote bare
+
+#+begin_src bash
+  cd ~/git/sandbox
+  git remote add bare kolia@localhost:bare/sandbox
+  git push bare master prod  # и далее все остальные ветки
+  git remote rm origin
+  git remote rename bare origin  # по правде говоря, сделал в lazygit
+#+end_src
+
+** Переводим копию на машине в сети на remote bare
+
+#+begin_src bash
+  ssh i7
+  cd ~/git/sandbox
+  git remote rm origin
+  git remote add origin kolia@kde:bare/sandbox
+  git fetch origin
+#+end_src

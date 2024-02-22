@@ -419,3 +419,12 @@ tmux pane grid
 tmux сетка панелей
 
 `Ctrl + b`, `Alt + 5`
+
+Привязять кнопку Meta к чему-то кроме Application Launcher
+----------------------------------------------------------
+https://userbase.kde.org/Plasma/Tips#Windows.2FMeta_Key
+https://www.reddit.com/r/kde/comments/mz4nyf/krunner_shortcut_doesnt_work/
+https://www.reddit.com/r/kde/comments/us8r97/help_meta_only_active_krunner_not_toggle/
+```
+kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.krunner,/App,,toggleDisplay" && qdbus org.kde.KWin /KWin reconfigure
+```

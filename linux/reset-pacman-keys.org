@@ -1,0 +1,7 @@
+https://wiki.archlinux.org/title/Pacman/Package_signing#Resetting_all_the_keys
+
+#+begin_src bash
+  sudo rm /etc/pacman.d/gnupg
+  sudo pacman-key --init
+  sudo pacman-key --populate
+#+end_src

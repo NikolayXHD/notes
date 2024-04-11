@@ -428,3 +428,9 @@ https://www.reddit.com/r/kde/comments/us8r97/help_meta_only_active_krunner_not_t
 ```
 kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.krunner,/App,,toggleDisplay" && qdbus org.kde.KWin /KWin reconfigure
 ```
+
+Починить прерывание хоткеев с Alt+Shift из-за переключения раскладки
+--------------------------------------------------------------------
+```
+yay -S xorg-server-bug865
+```

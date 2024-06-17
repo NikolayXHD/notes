@@ -1,0 +1,82 @@
+* evidently
+
+** What is Evidently?
+Evidently is an open-source Python library for data scientists and ML engineers.
+Under the hood, it has over a hundred metrics and tests that assess various aspects of the data and model quality.
+
+NB: Не сервис, не веб-приложение, не готовое решение. Это python фреймворк
+с готовыми функциями для расчёта метрик, формирования (не отображения) отчётов
+и тестов
+
+https://www.evidentlyai.com/blog/ml-model-monitoring-dashboard-tutorial
+Evidently has several different components:
+- Reports
+- Test Suites
+- Monitoring UI
+
+*** Насколько к готовому решению нас приближает Evidently Reports / Monitoring UI
+
+TLDR Evidently Reports позволяет посмотреть 1 конкретный график в блокнотике.
+Собрать из этого полноценный развёрнутый ML трекер нужно самому.
+
+В документации есть пример, как это сделать с помощью библиотеки Streamlit
+
+You can explore the Evidently Reports directly in Jupyter notebook or Colab and
+export them as standalone HTML files. The HTML file is already shareable but is
+not always convenient. For example, organizing and navigating multiple reports
+for past periods might take a lot of work.
+
+In this case, you can use Streamlit to create a web application that will add a
+user interface to organize and query multiple Evidently Reports. This is
+exactly what we are going to do!
+
+** evidently AI cloud
+
+Evidently Cloud is built on top of the Evidently Python library
+NB вот это уже готовое решение
+
+** evidently self-hosted
+
+*** Вариант 1 сложный
+
+Evidently, Prefect (аналог Qamon), PostgreSQL, and Grafana
+
+https://www.evidentlyai.com/blog/batch-ml-monitoring-architecture
+https://assets-global.website-files.com/6266b596eef18c1931f938f9/6453b6ed389a609399c77d21_3_batch_ml_monitoring_architecture-min.png
+
+- Есть шаблон для self-hosted решения, на основе которого мы сами можем делать мониторинг
+  Скорее всего мы захотим подменить там
+  - очередь заданий на наш Qamon либо Airflow
+  - заменить graphana на наши дешборды
+  - ? мб пропускать данные через metagraph
+
+[ ] Верно ли, что для каждой новой модели, придётся настраивать всю цепочку
+    с 0,
+    - заводить новые дешборды в Grafana
+    - заводить новые таблицы в базе
+    - заводить новые задачи / workflow в Prefect или Qamon
+    - самим обеспечивать правильный порядок деплоя всего вышесказанного
+
+NB не гораздо ли проще допилить MLECO, чтобы в него можно было закидывать метрики с прода?
+Никто не мешает генерировать метрики с прода с помощью evidently
+
+[ ] Кажется в этой схеме вообще нет реестра моделей
+
+*** Вариант 2 более простой
+
+Evidently, Streamlit
+
+Вместо SQL базы, мы храним HTML отчёты в структуре папочек.
+
+Evidently Reports позволяет посмотреть 1 конкретный график в блокнотике.
+Собрать из этого полноценный развёрнутый ML трекер нужно самому.
+
+**** Верно ли, что для каждой новой модели, придётся пилить с 0 набор дешбордов в streamlit
+
+Нет, набор отчётов, которые мы видим в streamlit формируется из структуры папок
+root/project_1/reports/report_1
+
+По итогу мы должны собрать ML-трекер сами, сами построить UI, сами настроить ротацию данных.
+
+Но есть готовый пример с виджетами для выбора
+Project / Reports period / Report name / Report subsection

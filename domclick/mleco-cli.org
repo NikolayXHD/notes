@@ -1,0 +1,52 @@
+* Проблемы с установкой пакетов Python
+
+** confer pypi в шаблоне requirements.txt от mleco-cli
+
+Предлагает --extra-index-url в котором нет torch
+https://repo.sberned.ru/repository/confer-pypi/simple
+
+** Старая версия Python в шаблоне Dockerfile
+
+#+begin_src Dockerfile
+FROM Python:3.8
+#+end_src
+
+Удачи с резолвом пакетов
+
+** Слишком поздно копируем requirements.txt в Dockerfile
+
+Правлю 1 букву в model.py . do_train
+Команда mleco run model train заново делает pip install -r requirements.txt
+Минус 1 минута из жизни, т.к. надо же поставить huggingface
+А что если надо поставить torch?
+
+Копирование .py файлов в Dockerfile лучше делать после
+pip install -r requirements.txt
+
+* Проблемы с запуском mleco run
+
+** Нет файла docker-compose.yml
+
+- Без него не работает запуск с флагом --local, но mleco init не создаёт его.
+- В нём нужно обязательно прописать
+  #+begin_src yaml
+  services:
+    test:
+      build:
+        environment:
+          - MLECO_ARGS
+  #+end_src
+
+** Несуществующая директория artifacts
+models/name/main.py требует, чтобы директория --artifacts_path, но дефолтное
+значение artifacts указывает на несуществующую директорию, т.к. мы ничего
+не сделали в Dockerfile, чтобы директория появилась.
+
+** Переменная окружения KUBERNETES_TOKEN в mleco_config.yml
+default-editor-token в формате base64
+https://mlprod.kube.sberned.ru/#/secret/{domclick_login}/default-editor-token-tkb62?namespace={domclick_login}
+KUBERNETES_TOKEN: ""
+
+** Нет файла .gitignore
+где был бы исключён mleco_config.yml, куда предлагают сложить приватный
+KUBERNETES_TOKEN

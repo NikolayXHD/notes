@@ -16,9 +16,55 @@
   перед подключением, где-то в продвинутых GUI настройках авторизации удалось
   это побороть.
 
+# vpn v2
+
+Перестало работать подключение с домашнего компьютера. Настроил socks5 proxy
+через mac
+
+
+0. Подключить VPN на маке
+1. Открыть socks5 туннель на 127.0.0.1:9090
+```bash
+ssh -N -D 9090 nmidalgodias@mac
+```
+
+2. Как проверить что работает
+
+```bash
+curl -x socks5h://127.0.0.1:9090 ifconfig.me
+```
+
+Должно срабатывать при включенном туннеле и валиться в ошибку при отключенном.
+
+3. Настроить socks5 proxy в firefox, vivaldi отказывается наотрез.
+
+4. Чтобы прозрачно работал git, lazygit и прочее.
+Настраиваем проксификатор, например
+
+```bash
+yay -S proxybound-git
+```
+
+Редактируем /etc/proxybound.conf
+```
+[ProxyList]
+socks5 127.0.0.1 9090
+```
+
+Запускаем терминал в proxy-обёртке
+```bash
+proxybound alacritty
+```
+
+В обёрнутом терминале git clone и т.д. на URL Домклика должны проходить без
+ошибок.
+
 # lightgbm
 
 Не ставится lightgbm, т.к. не находит libomp либо omp.h
 ```
 brew install libomp
 ```
+
+# Контейнер для jupyterlab в cubeflow
+dev-confer-docker-push.sberned.ru/nuds/kubeflow-torch:0.0.7

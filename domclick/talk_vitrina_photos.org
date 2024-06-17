@@ -1,0 +1,27 @@
+* Работа с фото витрины
+
+** Прод
+
+Сервис offers_photos_moderation, 3 чекера в проде
+
+photo_memes_checker
+photo_watermark_checker
+photo_obj_cls_checker
+
+Сервис тащит фотографии для чекеров по url, напр
+https://img.dmclk.ru/vitrina/46/78/4678bddda001c9828a3c0d88b2a13c0dc0106750_DS.webp
+
+Это SberCloudCDN
+
+** Обучение
+
+* Датасет memes_img
+  Картинки скопированы
+  http://mleco.stat.sberned.ru/dataset/301/version/3/files
+
+* Датасет watermarks_img
+  Картинки скопированы
+  http://mleco.stat.sberned.ru/dataset/291
+* Датасет transact_photos_eva_and_offers
+  http://mleco.stat.sberned.ru/dataset/183/version/16/files
+  картинки скопированы

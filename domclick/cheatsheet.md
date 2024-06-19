@@ -39,25 +39,14 @@ curl -x socks5h://127.0.0.1:9090 ifconfig.me
 3. Настроить socks5 proxy в firefox, vivaldi отказывается наотрез.
 
 4. Чтобы прозрачно работал git, lazygit и прочее.
-Настраиваем проксификатор, например
 
-```bash
-yay -S proxybound-git
+- Ставим openbsd-netcat вместо дефолтного gnu-netcat
+- Прописываем в конфиге git
 ```
-
-Редактируем /etc/proxybound.conf
+[core]
+        sshCommand = ssh -i /home/kolia/.ssh/id_ed25519 -o 'ProxyCommand nc -X 5 -x 127.0.0.1:9090 %h %p'
 ```
-[ProxyList]
-socks5 127.0.0.1 9090
-```
-
-Запускаем терминал в proxy-обёртке
-```bash
-proxybound alacritty
-```
-
-В обёрнутом терминале git clone и т.д. на URL Домклика должны проходить без
-ошибок.
+Для отладки добавляем флаг `-v`, вот так `ssh -v -i ...`
 
 # lightgbm
 

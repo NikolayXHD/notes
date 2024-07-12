@@ -57,3 +57,33 @@ brew install libomp
 
 # Контейнер для jupyterlab в cubeflow
 dev-confer-docker-push.sberned.ru/nuds/kubeflow-torch:0.0.7
+
+# proxy
+
+Подключаемся к VPN домклик через обратный SSH proxy
+
+1. Запускаем со стороны mac обратный SSH proxy до машины kde. Это нужно, т.к.
+   прямое SSH подключение kde -> mac больше не работает, спасибо админам.
+
+   ```
+   mac> ssh -NT -R 20022:localhost:22 kde
+   ```
+2. На стороне рабочей машины kde создаём SOCKS5 туннель до mac через ранее
+   поднятый обратный SSH proxy
+
+   ```
+   kde> ssh -N -D 9090 -p 20022 nmidalgodias@localhost
+   ```
+3. Запускаем браузер с флагом proxy
+   ```
+   kde> vivaldi --proxy-server="socks5://127.0.0.1:9090" --user-data-dir=/home/kolia/.local/share/ice/profiles/domclick
+   ```
+   Флаг ``--user-data-dir`` нужен только для того, чтобы не позволить vivaldi
+   переиспользовать ранее запущенный инстанс, т.к. в этом случае флаг proxy
+   не срабтает.
+
+4. Прописываем прокси в конфиге репы с jupyter для запросов из Python
+   ```
+   # .env
+   HTTPS_PROXY="socks5h://127.0.0.1:9090"
+   ```

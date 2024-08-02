@@ -87,3 +87,18 @@ dev-confer-docker-push.sberned.ru/nuds/kubeflow-torch:0.0.7
    # .env
    HTTPS_PROXY="socks5h://127.0.0.1:9090"
    ```
+
+## Прокси к докер-репозиторию
+https://stackoverflow.com/a/76643435/6656775
+Создаём /etc/systemd/system/docker.service.d/proxy.conf
+```
+[Service]
+Environment="HTTP_PROXY=socks5://127.0.0.1:9090"
+Environment="HTTPS_PROXY=socks5://127.0.0.1:9090"
+```
+Примечание: именно "socks5:", "socks5h:" не сработает
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```

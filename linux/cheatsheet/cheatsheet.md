@@ -434,3 +434,36 @@ kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.kr
 ```
 yay -S xorg-server-bug865
 ```
+
+Не получалось шарить принтер после переустановки OS
+---------------------------------------------------
+https://bbs.archlinux.org/viewtopic.php?id=231908
+```
+sudo cupsctl --share-printers
+```
+
+Не удаётся открыть .svgz выбранным приложением по-умолчанию
+-----------------------------------------------------------
+https://bbs.archlinux.org/viewtopic.php?id=270298
+Проблема в том, что нет утилиты mimeinfo. В десктопном окружении она есть, а в
+tiling window manager есть.
+
+В отсутствие mimeinfo xdg-mime определяет тип файла, запуская другую команду,
+`file --mime-type`. Команда `file` смотрит на содержимое файла и на собственную
+отдельную базу mime-типов.
+
+В итоге `xdg-mime query filetype myfile.svgz` отдаст `application/gzip` вместо
+`image/svg+xml-compressed`, поэтому выбранное дефолтное приложение для .svgz
+ни на что не повлияет.
+
+xdg-open откроет файл архиватором, т.к. именно он является дефолтным приложением
+для типа `application/gzip`.
+
+Решение
+~~~~~~~
+```
+sudo pacman -S perl-file-type
+```
+В система появляется утилита `mimetype`, `xdg-mime` вызывает её, а не `file`,
+правильно определяет тип `image/svg+xml-compressed`, xdg-open найдёт дефолтное
+приложение для этого типа.

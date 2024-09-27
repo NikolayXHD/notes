@@ -138,6 +138,13 @@ LimitAS=10G
 sudo systemctl daemon-reload && sudo systemctl restart docker
 ```
 
+Зеркала hub.docker.com
+-------------------------------
+/etc/docker/daemon.json
+```
+{ "registry-mirrors" : [ "https://dockerhub.timeweb.cloud" ] }
+```
+
 Downgrade all packages to a previous date
 -----------------------------------------
 ```

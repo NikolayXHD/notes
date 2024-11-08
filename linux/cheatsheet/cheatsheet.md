@@ -474,3 +474,31 @@ sudo pacman -S perl-file-type
 В система появляется утилита `mimetype`, `xdg-mime` вызывает её, а не `file`,
 правильно определяет тип `image/svg+xml-compressed`, xdg-open найдёт дефолтное
 приложение для этого типа.
+
+Screen tearing в видео
+----------------------
+Видео воспроизводится с вертикальными разрывами, хотя то же самое видео на
+маке вопроизводится без дефектов
+
+Совет с reddit
+~~~~~~~~~~~~~~
+не релеватнто, но в ~/config/i3/picom.conf, проставляем `vsync=true;`
+
+Рецепт с arch wiki
+~~~~~~~~~~~~~~~~~~
+https://wiki.archlinux.org/title/NVIDIA/Troubleshooting#Avoid_screen_tearing
+https://wiki.archlinux.org/title/NVIDIA#Automatic_configuration
+
+Т.к. пред. пункт не помог, запустил `sudo nvidia-settings`
+
+1. В GUI в гармошке слева выбираем раздел X Server Display Configuration
+2. Жмакаем Advanced...
+3. Для каждого дисплея жмакаем галку Force Full Composition Pipline
+4. Жмакаем Apply
+5. Жмакаем Save to X Configuration File
+6. Прописываем путь /etc/X11/xorg.conf.d/20-nvidia.conf
+7. В сгенерённом конфиге выкидываем всё кроме секций Monitor, Device, Screen
+8. Перелогиниться
+9. Проверяем, что применилось `nvidia-settings --query CurrentMetaMode`
+
+В выводе должно быть для всех дисплеев `ForceFullCompositionPipeline=On`

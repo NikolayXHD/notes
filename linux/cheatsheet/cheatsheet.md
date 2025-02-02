@@ -502,3 +502,33 @@ https://wiki.archlinux.org/title/NVIDIA#Automatic_configuration
 9. Проверяем, что применилось `nvidia-settings --query CurrentMetaMode`
 
 В выводе должно быть для всех дисплеев `ForceFullCompositionPipeline=On`
+
+Запретить GPU для vscode / continue / ollama
+--------------------------------------------
+
+Способ - выставить для ollama CUDA_VISIBLE_DEVICES=-1, как описано в
+https://github.com/ollama/ollama/blob/main/docs/gpu.md
+
+ollama запускается через systemd unit, там и нужно прописать переменную
+
+```bash
+# /etc/systemd/system/ollama.service
+
+[Service]
+# ...
+Environment="PATH=..."
+Environment="CUDA_VISIBLE_DEVICES=-1"
+```
+Подгружаем изменения
+
+```bash
+sudo systemctl deamon-reload
+sudo systemctl restart ollama
+```
+
+Проверяем, что переменная применилась
+```bash
+sudo systemctl status ollama
+# смотрим pid
+sudo strings /proc/<pid>/environ
+```

@@ -532,3 +532,13 @@ sudo systemctl status ollama
 # смотрим pid
 sudo strings /proc/<pid>/environ
 ```
+
+Установить python3.11 вручную
+-----------------------------
+Страница AUR репы https://aur.archlinux.org/packages/python311?O=10
+
+```bash
+git clone https://aur.archlinux.org/python311.git
+cd python311
+makepkg -si
+```
